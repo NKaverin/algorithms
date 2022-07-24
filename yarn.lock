@@ -1928,6 +1928,11 @@
   "resolved" "https://registry.npmjs.org/@types/trusted-types/-/trusted-types-2.0.2.tgz"
   "version" "2.0.2"
 
+"@types/uuid@8.3.4":
+  "integrity" "sha512-c/I8ZRb51j+pYGAu5CrFMRxqZ2ke4y2grEBO5AUjgSkSk+qT2Ea+OdWElz/OiMf5MNpn2b17kuVBwZLQJXzihw=="
+  "resolved" "https://registry.npmjs.org/@types/uuid/-/uuid-8.3.4.tgz"
+  "version" "8.3.4"
+
 "@types/ws@^8.2.2":
   "integrity" "sha512-6YOoWjruKj1uLf3INHH7D3qTXwFfEsg1kf3c0uDdSBJwfa/llkwIjrAGV7j7mVgGNbzTQ3HiHKKDXl6bJPD97w=="
   "resolved" "https://registry.npmjs.org/@types/ws/-/ws-8.5.3.tgz"
@@ -5821,6 +5826,11 @@
   "resolved" "https://registry.npmjs.org/lodash.uniq/-/lodash.uniq-4.5.0.tgz"
   "version" "4.5.0"
 
+"lodash@^3.10.0":
+  "integrity" "sha512-9mDDwqVIma6OZX79ZlDACZl8sBm0TEnkf99zV3iMA4GzkIT/9hiqP5mY0HoT1iNLCrKc/R1HByV+yJfRWVJryQ=="
+  "resolved" "https://registry.npmjs.org/lodash/-/lodash-3.10.1.tgz"
+  "version" "3.10.1"
+
 "lodash@^4.17.14", "lodash@^4.17.15", "lodash@^4.17.20", "lodash@^4.17.21", "lodash@^4.7.0":
   "integrity" "sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg=="
   "resolved" "https://registry.npmjs.org/lodash/-/lodash-4.17.21.tgz"
@@ -8490,10 +8500,25 @@
   "resolved" "https://registry.npmjs.org/utils-merge/-/utils-merge-1.0.1.tgz"
   "version" "1.0.1"
 
-"uuid@^8.3.2":
+"uuid@^8.3.2", "uuid@8.3.2":
   "integrity" "sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg=="
   "resolved" "https://registry.npmjs.org/uuid/-/uuid-8.3.2.tgz"
   "version" "8.3.2"
+
+"uuidv4@^6.2.13":
+  "integrity" "sha512-AXyzMjazYB3ovL3q051VLH06Ixj//Knx7QnUSi1T//Ie3io6CpsPu9nVMOx5MoLWh6xV0B9J0hIaxungxXUbPQ=="
+  "resolved" "https://registry.npmjs.org/uuidv4/-/uuidv4-6.2.13.tgz"
+  "version" "6.2.13"
+  dependencies:
+    "@types/uuid" "8.3.4"
+    "uuid" "8.3.2"
+
+"v4@^0.0.1":
+  "integrity" "sha512-UILzWfbLuyncHcGquTcLzetXtX/Kgpnug6iLn/7ruiYhgVzI5RPiNRdDJlxlpCr2qwtJ53soZ0TTNeOwB3aSBA=="
+  "resolved" "https://registry.npmjs.org/v4/-/v4-0.0.1.tgz"
+  "version" "0.0.1"
+  dependencies:
+    "lodash" "^3.10.0"
 
 "v8-compile-cache@^2.0.3":
   "integrity" "sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA=="

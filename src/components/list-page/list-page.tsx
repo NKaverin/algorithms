@@ -7,143 +7,10 @@ import { Input } from "../ui/input/input";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import { sleep } from "../utils/utils";
 import styles from "./list-page.module.css";
+import { v4 } from 'uuid'
+import { LinkedList } from "../LinkedList/LinkedList";
 
-class LinkedListNode<T> {
-  value: T;
-  next: LinkedListNode<T> | null = null;
 
-  constructor(value: T, next: LinkedListNode<T> | null) {
-    this.value = value;
-    this.next = (next === undefined ? null : next);
-  }
-}
-
-class LinkedList<T> {
-  private head: LinkedListNode<T> | null;
-  private tail: LinkedListNode<T> | null;
-
-  constructor() {
-    this.head = null;
-    this.tail = null;
-  }
-
-  prepend(value: T) {
-    const newNode = new LinkedListNode(value, null);
-    if (!this.head) {
-      this.head = newNode;
-      this.tail = newNode;
-    } else {
-      newNode.next = this.head;
-      this.head = newNode;
-    }
-
-  }
-
-  append(value: T) {
-    const newNode = new LinkedListNode(value, null);
-    if (!this.head || !this.tail) {
-      this.head = newNode;
-      this.tail = newNode;
-    } else {
-      this.tail.next = newNode;
-      this.tail = newNode;
-    }
-  }
-
-  deleteFromHead() {
-    if (this.head) {
-      if (this.head.next) {
-        this.head = this.head.next;
-      } else {
-        this.head = null;
-      }
-    }
-  }
-
-  deleteFromTail() {
-    if (this.head) {
-      if (this.head === this.tail) {
-        this.head = null;
-        this.tail = null;
-      } else {
-        let nextNode = this.head.next;
-        let prev = this.head;
-        while (nextNode !== this.tail && nextNode) {
-          prev = nextNode;
-          nextNode = nextNode.next;
-        }
-        prev.next = null;
-        this.tail = prev;
-      }
-    }
-  }
-
-  deleteIndex(index: number) {
-    if (this.head) {
-      if (index === 0) {
-        this.deleteFromHead();
-      } else {
-        let nextNode = this.head.next;
-        let prev = this.head;
-        let i = index;
-        while ((nextNode !== this.tail && nextNode) && (i !== 1 && nextNode)) {
-          i--;
-          prev = nextNode;
-          nextNode = nextNode.next;
-        }
-        if (nextNode) {
-          prev.next = nextNode.next;
-        } else {
-          prev.next = null;
-        }
-        this.tail = prev;
-      }
-    }
-  }
-
-  addIndex(value: T, index: number) {
-    if (this.head) {
-      if (index === 0) {
-        this.prepend(value);
-      } else {
-        let nextNode = this.head.next;
-        let prev = this.head;
-        let i = index;
-        while ((nextNode !== this.tail && nextNode) && (i !== 1 && nextNode)) {
-          i--;
-          prev = nextNode;
-          nextNode = nextNode.next;
-        }
-        const newNode = new LinkedListNode(value, null);
-        prev.next = newNode;
-        newNode.next = nextNode;
-        if (!nextNode) {
-          this.tail = newNode;
-        }
-      }
-    }
-  }
-
-  listToData() {
-    const data:Array<T> = []
-    let node = this.head;
-    
-    while (node) {
-      data.push(node.value);
-      node = node.next;
-    }
-    return data;
-  }
-
-  getHead() {
-    return this.head;
-  }
-
-  getTail() {
-    return this.tail;
-  }
-
-} 
 
 const linkedList = new LinkedList<string>();
 
@@ -327,38 +194,40 @@ export const ListPage: React.FC = () => {
     if (inputRef.current && inputRefIndex.current) {
       const index = +inputRefIndex.current.value;
       let listData = linkedList.listToData();
-      let newData = initial;
-      for (let i = 0; i < listData.length; i++) {
-        newData.push({elem: listData[i], color:ElementStates.Default, isHead: i === 0, isTail: i === listData.length - 1});
-      }
-      setData([...newData])
-      for (let i = 0; i < listData.length && i <= index; i++) {
-        // подсвечиваем элементы по очереди
-        newData[i] = ({elem: listData[i], color:ElementStates.Changing, isHead: i === 0, isTail: i === listData.length - 1});
-        if (i !== 0 ) {
-          newData[i - 1] = ({elem: listData[i - 1], color:ElementStates.Changing, isHead: i - 1 === 0, isTail: i - 1 === listData.length - 1, addHere: ''});
+      if (listData.length > index) {
+        let newData = initial;
+        for (let i = 0; i < listData.length; i++) {
+          newData.push({elem: listData[i], color:ElementStates.Default, isHead: i === 0, isTail: i === listData.length - 1});
         }
-        if (i === index) {
+        setData([...newData])
+        for (let i = 0; i < listData.length && i <= index; i++) {
+          // подсвечиваем элементы по очереди
+          newData[i] = ({elem: listData[i], color:ElementStates.Changing, isHead: i === 0, isTail: i === listData.length - 1});
+          if (i !== 0 ) {
+            newData[i - 1] = ({elem: listData[i - 1], color:ElementStates.Changing, isHead: i - 1 === 0, isTail: i - 1 === listData.length - 1, addHere: ''});
+          }
+          if (i === index) {
+            await sleep(500)
+            setData([...newData])
+            newData[i] = ({elem: '', color:ElementStates.Changing, isHead: i === 0, isTail: i === listData.length - 1, deleteHere: listData[i]});
+          }
           await sleep(500)
           setData([...newData])
-          newData[i] = ({elem: '', color:ElementStates.Changing, isHead: i === 0, isTail: i === listData.length - 1, deleteHere: listData[i]});
         }
-        await sleep(500)
+
+        // удаляем
+        linkedList.deleteIndex(index);
+
+        // обнуляем, переполучаем
+        newData = [];
+        listData = linkedList.listToData();
+        for (let i = 0; i < listData.length; i++) {
+          newData.push({elem: listData[i], color:ElementStates.Default, isHead: i === 0, isTail: i === listData.length - 1});
+        }
+
+        await sleep(500);
         setData([...newData])
       }
-
-      // удаляем
-      linkedList.deleteIndex(index);
-
-      // обнуляем, переполучаем
-      newData = [];
-      listData = linkedList.listToData();
-      for (let i = 0; i < listData.length; i++) {
-        newData.push({elem: listData[i], color:ElementStates.Default, isHead: i === 0, isTail: i === listData.length - 1});
-      }
-
-      await sleep(500);
-      setData([...newData])
     }
     setLoadingButton('');
   }
@@ -422,36 +291,36 @@ export const ListPage: React.FC = () => {
       </div>           
       <div className={styles.output}>
         {data.map((elem, index) => {
-            return (<>
-            {index !== 0 &&  (<ArrowIcon fill={elem.color === ElementStates.Changing ? "#d252e1" : "#0032FF"} />)}
-            <div key={index} className={styles.circles}>
-              {elem.addHere && (
-                <Circle
-                  isSmall={true}
-                  state={ElementStates.Changing}
-                  letter={elem.addHere}
-                  extraClass={styles.topCircle}
-              />)}
-              <Circle 
-                letter={elem.elem} 
-                key={index} 
-                state={elem.color} 
-                index={index} 
-                extraClass={styles.centerCircle}
-                head={elem.isHead === true && !elem.addHere ? 'top' : ''}
-                tail={elem.isTail === true && !elem.deleteHere ? 'tail' : ''} />
-              {elem.deleteHere && (
-                <Circle
-                  isSmall={true}
-                  state={ElementStates.Changing}
-                  letter={elem.deleteHere}
-                  extraClass={styles.bottomCircle}
-                />
+            return (<div key={v4() } className={styles.circles} >
+              {index !== 0 &&  (<ArrowIcon key={v4()} fill={elem.color === ElementStates.Changing ? "#d252e1" : "#0032FF"} />)}
+                {elem.addHere && (
+                  <Circle
+                    isSmall={true}
+                    state={ElementStates.Changing}
+                    letter={elem.addHere}
+                    extraClass={styles.topCircle}
+                    key={v4()}
+                />)}
+                <Circle 
+                  letter={elem.elem} 
+                  key={v4()} 
+                  state={elem.color} 
+                  index={index} 
+                  extraClass={styles.centerCircle}
+                  head={elem.isHead === true && !elem.addHere ? 'top' : ''}
+                  tail={elem.isTail === true && !elem.deleteHere ? 'tail' : ''} />
+                {elem.deleteHere && (
+                  <Circle
+                    isSmall={true}
+                    state={ElementStates.Changing}
+                    letter={elem.deleteHere}
+                    extraClass={styles.bottomCircle}
+                    key={v4()}
+                  />
 
-              )}
-              
-              </div> 
-            </>)
+                )}
+                
+            </div>)
           })}       
       </div>
     </SolutionLayout>

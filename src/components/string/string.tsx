@@ -15,6 +15,7 @@ interface strData {
 export const StringComponent: React.FC = () => {
 
   const inputRef = createRef<HTMLInputElement>();
+  const [blockButton, setBlockButton] = React.useState(true);
   const initial:Array<strData> = [];
   const [str, setStr] = React.useState(initial);
   const [loadingButton, setLoadingButton] = React.useState('');
@@ -51,12 +52,13 @@ export const StringComponent: React.FC = () => {
     <SolutionLayout title="Строка">
       <div className={styles.input}>
         <Input 
+          onChange={(e) => {setBlockButton(inputRef.current ? inputRef.current.value.length === 0 : true)} }
           maxLength={11}
           type='text'
           isLimitText={true}
           ref={inputRef} 
         />
-        <Button text="Развернуть" onClick={turnString} isLoader ={loadingButton === 'turnString'} />
+        <Button text="Развернуть" onClick={turnString} isLoader ={loadingButton === 'turnString'} disabled={blockButton}/>
       </div>            
       <div className={styles.output}>
         {str.map((elem, index) => {

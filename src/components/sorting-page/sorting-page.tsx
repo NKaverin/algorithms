@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Direction } from "../../types/direction";
 import { ElementStates } from "../../types/element-states";
 import { Button } from "../ui/button/button";
@@ -136,6 +136,9 @@ export const SortingPage: React.FC = () => {
     setSortOrder(order)
     sortType === 'bubble' ? bubbleSort(order) : selectSort(order);
   }
+  useEffect(() => {
+    randomArr();
+  },[])
 
   return (
     <SolutionLayout title="Сортировка массива">

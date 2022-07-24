@@ -1,32 +1,12 @@
 import React, { createRef } from "react";
 import { ElementStates } from "../../types/element-states";
+import { Stack } from "../stack/stack";
 import { Button } from "../ui/button/button";
 import { Circle } from "../ui/circle/circle";
 import { Input } from "../ui/input/input";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import { sleep } from "../utils/utils";
 import styles from "./stack-page.module.css";
-
-class Stack<T> {
-  private container: T[] = [];
-
-  push = (item:T, setData:React.Dispatch<React.SetStateAction<T[]>> ) => {
-    this.container.push(item);
-    setData([...this.container]);
-  };
-  pop = (setData:React.Dispatch<React.SetStateAction<T[]>>) => {
-    this.container.pop();
-    setData([...this.container]);
-    
-  };
-  peak = ():number => {
-    return this.container.length;
-  };
-  clear = (setData:React.Dispatch<React.SetStateAction<T[]>>) => {
-    this.container = [];
-    setData([])
-  }
-} 
 
 const stack = new Stack<string>();
 

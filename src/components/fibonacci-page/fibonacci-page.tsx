@@ -16,6 +16,7 @@ export const FibonacciPage: React.FC = () => {
   const inputRef = createRef<HTMLInputElement>();
   const initial:Array<iData> = [];
   const [data, setData] = React.useState(initial);
+  const [blockButton, setBlockButton] = React.useState(true);
   const [loadingButton, setLoadingButton] = React.useState('');
   const fibbonacci = async () => {
     setLoadingButton('fibbonacci');
@@ -41,11 +42,12 @@ export const FibonacciPage: React.FC = () => {
     <SolutionLayout title="Последовательность Фибоначчи">
       <div className={styles.input}>
         <Input 
+          onChange={(e) => {setBlockButton(inputRef.current ? inputRef.current.value.length === 0 || +inputRef.current.value > 19 : true)} }
           max={19}
           type='number'
           isLimitText={true}
           ref={inputRef} />
-        <Button text="Рассчитать" onClick={fibbonacci} isLoader ={loadingButton === 'fibbonacci'}/>
+        <Button text="Рассчитать" onClick={fibbonacci} isLoader ={loadingButton === 'fibbonacci'} disabled={blockButton}/>
       </div>            
       <div className={styles.output}>
         {data.map((elem, index) => {
