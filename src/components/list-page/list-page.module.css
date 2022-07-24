@@ -1,0 +1,55 @@
+.output {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 120px;
+}
+
+.input {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    padding-bottom: 15px;
+}
+
+.index {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+}
+
+.inputField {
+    max-width: 250px;
+}
+
+.doubleInput {
+    width: 346px;
+}
+
+.onceInput {
+    width: 166px;
+}
+
+.topCircle {
+    position: absolute;
+    bottom: 90px;
+    left: 12px;
+}
+
+.bottomCircle {
+    position: absolute;
+    top: 115px;
+    left: 12px;
+}
+
+
+.circles {
+    display: flex;
+    flex-direction: column;
+    flex-flow: row;
+    position: relative;
+}
