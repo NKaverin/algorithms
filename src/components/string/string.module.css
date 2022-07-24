@@ -1,0 +1,11 @@
+.output {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    justify-content: center;
+}
+
+.input {
+    display: flex;
+    gap: 12px;
+}
