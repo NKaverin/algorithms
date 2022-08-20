@@ -1,0 +1,14 @@
+.output {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    align-content: flex-start;
+    gap: 10px;
+    padding-top: 30px;
+} 
+.input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+} 
