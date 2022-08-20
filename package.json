@@ -17,16 +17,17 @@
     "react-router-dom": "^5.2.1",
     "react-scripts": "5.0.0",
     "typescript": "^4.5.5",
-    "web-vitals": "^2.1.4",
     "uuid": "^8.3.2",
     "uuidv4": "^6.2.13",
-    "v4": "^0.0.1"
+    "v4": "^0.0.1",
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "cypress": "./node_modules/.bin/cypress open"
   },
   "eslintConfig": {
     "extends": [
@@ -47,7 +48,12 @@
     ]
   },
   "devDependencies": {
-    "@types/react-router-dom": "^5.3.3"
+    "@types/react-router-dom": "^5.3.3",
+    "cypress": "^10.2.0",
+    "enzyme": "^3.11.0",
+    "eslint-plugin-cypress": "^2.12.1",
+    "fetch-mock": "^9.11.0",
+    "react-test-renderer": "^17.0.2"
   },
   "description": "В проектной работе мы предлагаем вам написать визуализатор алгоритмов, которые вы будете изучать в течение месяца. Эта проектная работа заточена на анимацию и поэтапное отображение работы алгоритма, что позволит вам детальнее понять каждый шаг его работы.",
   "main": "index.js",

@@ -1,4 +1,4 @@
-import React, { createRef } from "react";
+import React, { createRef, useEffect } from "react";
 import { ElementStates } from "../../types/element-states";
 import { Button } from "../ui/button/button";
 import { Circle } from "../ui/circle/circle";
@@ -9,6 +9,7 @@ import { sleep } from "../utils/utils";
 import styles from "./list-page.module.css";
 import { v4 } from 'uuid'
 import { LinkedList } from "../LinkedList/LinkedList";
+import { DELAY_IN_MS } from "../../constants/delays";
 
 
 
@@ -58,7 +59,7 @@ export const ListPage: React.FC = () => {
         newData.push({elem: listData[i], color:ElementStates.Default, isHead: i === 0, isTail: i === listData.length - 1});
       }
 
-      await sleep(500);
+      await sleep(DELAY_IN_MS);
       setData([...newData])
     }
     setLoadingButton('');
@@ -88,7 +89,7 @@ export const ListPage: React.FC = () => {
         newData.push({elem: listData[i], color:ElementStates.Default, isHead: i === 0, isTail: i === listData.length - 1});
       }
 
-      await sleep(500);
+      await sleep(DELAY_IN_MS);
       setData([...newData])
     }
     setLoadingButton('');
@@ -108,7 +109,7 @@ export const ListPage: React.FC = () => {
     // показываем
     setData([...newData])
     newData[0] = ({elem: '', color:ElementStates.Changing, deleteHere:listData[0], isHead: true, isTail: 0 === listData.length - 1});
-    await sleep(500);
+    await sleep(DELAY_IN_MS);
     setData([...newData])
     // удаляем
     linkedList.deleteFromHead();
@@ -119,7 +120,7 @@ export const ListPage: React.FC = () => {
       newData.push({elem: listData[i], color:ElementStates.Default, isHead: i === 0, isTail: i === listData.length - 1});
     }
 
-    await sleep(500);
+    await sleep(DELAY_IN_MS);
     setData([...newData])
     setLoadingButton('');
   }
@@ -139,7 +140,7 @@ export const ListPage: React.FC = () => {
     // показываем
     setData([...newData])
     newData[listData.length - 1] = ({elem: '', color:ElementStates.Changing, deleteHere:listData[listData.length - 1], isHead: listData.length - 1 === 0, isTail: true});
-    await sleep(500);
+    await sleep(DELAY_IN_MS);
     setData([...newData])
     // добавляем в лист
     linkedList.deleteFromTail();
@@ -150,7 +151,7 @@ export const ListPage: React.FC = () => {
       newData.push({elem: listData[i], color:ElementStates.Default, isHead: i === 0, isTail: i === listData.length - 1});
     }
 
-    await sleep(500);
+    await sleep(DELAY_IN_MS);
     setData([...newData])
     setLoadingButton('');
   }
@@ -171,7 +172,7 @@ export const ListPage: React.FC = () => {
         if (i !== 0 ) {
           newData[i - 1] = ({elem: listData[i - 1], color:ElementStates.Changing, isHead: i - 1 === 0, isTail: i - 1 === listData.length - 1, addHere: ''});
         }
-        await sleep(500)
+        await sleep(DELAY_IN_MS)
         setData([...newData])
       }
 
@@ -184,7 +185,7 @@ export const ListPage: React.FC = () => {
         newData.push({elem: listData[i], color:ElementStates.Default, isHead: i === 0, isTail: i === listData.length - 1});
       }
 
-      await sleep(500);
+      await sleep(DELAY_IN_MS);
       setData([...newData])
     }
     setLoadingButton('');
@@ -207,11 +208,11 @@ export const ListPage: React.FC = () => {
             newData[i - 1] = ({elem: listData[i - 1], color:ElementStates.Changing, isHead: i - 1 === 0, isTail: i - 1 === listData.length - 1, addHere: ''});
           }
           if (i === index) {
-            await sleep(500)
+            await sleep(DELAY_IN_MS)
             setData([...newData])
             newData[i] = ({elem: '', color:ElementStates.Changing, isHead: i === 0, isTail: i === listData.length - 1, deleteHere: listData[i]});
           }
-          await sleep(500)
+          await sleep(DELAY_IN_MS)
           setData([...newData])
         }
 
@@ -225,12 +226,17 @@ export const ListPage: React.FC = () => {
           newData.push({elem: listData[i], color:ElementStates.Default, isHead: i === 0, isTail: i === listData.length - 1});
         }
 
-        await sleep(500);
+        await sleep(DELAY_IN_MS);
         setData([...newData])
       }
     }
     setLoadingButton('');
   }
+  useEffect(() => {
+    data.push({elem: '1', color:ElementStates.Default, isHead: true, isTail: true});
+    setData([...data])
+  },[])
+
   return (
     <SolutionLayout title="Связный список">
       <div className={styles.input}>
