@@ -1,4 +1,5 @@
 import React, { createRef } from "react";
+import { DELAY_IN_MS } from "../../constants/delays";
 import { ElementStates } from "../../types/element-states";
 import { Stack } from "../stack/stack";
 import { Button } from "../ui/button/button";
@@ -28,7 +29,7 @@ export const StackPage: React.FC = () => {
       inputRef.current.value = '';
       // блокируем кнопку
       setBlockButton(true);
-      await sleep(500);
+      await sleep(DELAY_IN_MS);
       setProcessing(false);
     }
     setLoadingButton('');
@@ -38,7 +39,7 @@ export const StackPage: React.FC = () => {
     if (inputRef.current) {
       // закрашиваем кружок
       setProcessing(true);
-      await sleep(500);
+      await sleep(DELAY_IN_MS);
       // удаляем
       stack.pop(setData);
       setProcessing(false);

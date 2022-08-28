@@ -1,4 +1,5 @@
 import React, { createRef } from "react";
+import { DELAY_IN_MS } from "../../constants/delays";
 import { ElementStates } from "../../types/element-states";
 import { Queue } from "../queue/queue";
 import { Button } from "../ui/button/button";
@@ -25,7 +26,7 @@ export const QueuePage: React.FC = () => {
       inputRef.current.value = '';
       // блокируем кнопку
       setBlockButton(true);
-      await sleep(500);
+      await sleep(DELAY_IN_MS);
       setProcessing(false);
     }
     setLoadingButton('');
@@ -36,7 +37,7 @@ export const QueuePage: React.FC = () => {
     setProcessing(true);
     // удаляем
     queue.dequeue();
-    await sleep(500);
+    await sleep(DELAY_IN_MS);
     setProcessing(false);
     setLoadingButton('');
   }
@@ -45,7 +46,7 @@ export const QueuePage: React.FC = () => {
     // удаляем
     setProcessing(true);
     queue.clear();
-    await sleep(500);
+    await sleep(DELAY_IN_MS);
     setProcessing(false);
     setLoadingButton('');
   } 

@@ -1,4 +1,5 @@
 import React, { createRef } from "react";
+import { DELAY_IN_MS } from "../../constants/delays";
 import { ElementStates } from "../../types/element-states";
 import { Button } from "../ui/button/button";
 import { Circle } from "../ui/circle/circle";
@@ -31,7 +32,7 @@ export const FibonacciPage: React.FC = () => {
         } else {
           ndata.push({elem:ndata[i-3].elem + ndata[i-2].elem, color:ElementStates.Default})
         }
-        await sleep(300);
+        await sleep(DELAY_IN_MS);
         setData([...ndata]);
       }
     }
